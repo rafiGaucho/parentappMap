@@ -1,6 +1,5 @@
 import React, {PropTypes} from 'react';
 import {
-
   View,ActivityIndicator,ImageBackground,
   StyleSheet,WebView,AsyncStorage,BackHandler,TouchableOpacity,Text
 } from 'react-native';
@@ -11,7 +10,7 @@ import {connect} from 'react-redux';
 import OfflineCacheWebView from 'react-native-offline-cache-webview';
 import {schoolCode} from './../schoolCode.js'
 import firebase from 'react-native-firebase';
-import Map from './map.js';
+import Map from './Map';
 
 
 class Home extends React.Component {
@@ -36,22 +35,22 @@ componentWillUnmount() {
   }
 getUserId = async () => {
   let userId = '';
+  let busRouteId=[];
   try {
     userId = await AsyncStorage.getItem('userID') ;
-    this.setState({userID:userId});
+    busRouteId = await AsyncStorage.getItem('busRouteId') ;
+    this.setState({userID:userId,busRouteId:busRouteId});
     } catch (error) {
     console.warn(error.message);
     }
   }
 handleBackPress = () => {
-  if(this.state.mode === true){
+    this.popupDialog.show();
+    return true;
+  }
+handleBackButton = () => {
     firebase.database().ref('mapMode/'+schoolCode+'/'+this.state.userID).child("mode").set(false);
     this.props.clearMapData()
-  }
-  else if(this.state.mode === false){
-    this.popupDialog.show();
-  }
-  return true;
   }
 logout=()=>{
 this.props.logoutUser();
@@ -75,9 +74,20 @@ loadEnd=()=>{this.setState({isLoading:false})}
   render() {
     if(this.state.mode === true){
     return (
+      <View style={{height:'100%',width:'100%'}}>
+        <Map busRouteId={this.state.busRouteId} handleBackButton={this.handleBackButton}/>
+        <PopupDialog
+          ref={(popupDialog) => { this.popupDialog = popupDialog; }}
+         dialogAnimation={slideAnimation} dismissOnTouchOutside={true}
+         height={1} width={1} containerStyle={{}} dialogStyle={{}} >
+         <ImageBackground source={require('./image.jpg')} style={{width: '100%', height: '100%',}} resizeMode='center' >
 
-      <View style={{flex:1,alignItems:'center',justifyContent:'center'}}>
-        <Map busId={this.state.busId}/>
+         <View style={{flex:1,borderTopLeftRadius:7,borderTopRightRadius:7,alignItems:'center',justifyContent:'center'}}>
+           <MessagePopUp logout={this.logout} exit={this.exit} cancel={this.cancel}/>
+         </View>
+       </ImageBackground>
+        </PopupDialog>
+
       </View>
 
       );

@@ -15,9 +15,9 @@ export const getUser = (userId) => {
         dispatch({type:'getUser',userString:userId})
 }}
 
-export const saveUser = (data) => {
+export const saveUser = (data,busRouteId) => {
   return (dispatch) => {
-        saveUserId(data)
+        saveUserId(data,busRouteId)
         dispatch({type:'saveUser',userString:data})
         // alert(data.message)
 }}
@@ -44,7 +44,8 @@ getUserId = async () => {
 
 }
 
-const saveUserId = data => {
+const saveUserId = (data,busRouteId) => {
+      AsyncStorage.setItem('busRouteId', JSON.stringify(busRouteId));
      AsyncStorage.setItem('success', JSON.stringify(data.success));
      AsyncStorage.setItem('userID',JSON.stringify(data.parent.id));
 };

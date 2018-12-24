@@ -16,7 +16,7 @@ const heightScreen= Dimensions.get('window').height/26;
 class Login extends React.Component {
   constructor(props) {
     super(props);
-    this.state={userName:'',password:'',waiting:false}
+    this.state={userName:'9544330995',password:'ssdparent',waiting:false}
   }
 handleUserNameChange=(userName)=>{this.setState({userName:userName})}
 handlePasswordChange=(password)=>{this.setState({password:password})}
@@ -31,7 +31,7 @@ handleLogin= async () =>{
   }
   user=this.state.userName;
   pass=this.state.password;
-  fetch('http://test.ssdiary.com/ssdiary/parentApp/login.html?userName='+user+'&password='+pass+'&schoolCode='+schoolCode, {
+  fetch('http://ssdiary.com/ssdiary/parentApp/login.html?userName='+user+'&password='+pass+'&schoolCode='+schoolCode, {
         method: "POST",
         body: JSON.stringify(this.state.data),
         headers: {
@@ -44,7 +44,12 @@ handleLogin= async () =>{
         .then(value => {
           this.setState({ data: value });
           if(value.success ===true){
-            this.props.saveUser(value);
+            const busRouteId=[];
+            value.studentList.filter(item=>{
+              let val = item.busRouteId;
+              busRouteId.push(val);
+            })
+            this.props.saveUser(value,busRouteId);
           }
           this.setState({waiting:false});
         }).then(()=>{if(this.state.data.success==true){
