@@ -3,15 +3,15 @@ import {Platform, StyleSheet, Text, View,ScrollView} from 'react-native';
 import firebase from 'react-native-firebase';
 import MapView ,{ Polyline,PROVIDER_GOOGLE ,Marker} from 'react-native-maps';
 import {connect} from 'react-redux';
-import {mapDataFetch,clearMapData} from './../store/session/actions.js';
+import {mapDataFetch,clearMapData} from './../../store/session/actions.js';
 
  class Map extends Component<Props> {
-constructor(props) {
-  super(props);
-}
+// constructor(props) {
+//   super(props);
+// }
 
   componentDidMount (){
-    firebase.database().ref('SchoolBus/'+this.props.busId).orderByKey().on('value',(snapshot)=>{
+    firebase.database().ref('SchoolBus/'+this.props.busCode+this.props.busId).orderByKey().on('value',(snapshot)=>{
       if(snapshot.exists()){
       const destination = []
       snapshot.forEach(item => {
@@ -22,21 +22,20 @@ constructor(props) {
        }
        destination.push(data)
       });
-
      var initialRegion={latitude:destination[0].latitude,longitude:destination[0].longitude,latitudeDelta :0.0922,longitudeDelta:0.0421}
      var finalRegion={latitude:destination[destination.length-1].latitude,longitude:destination[destination.length-1].longitude,latitudeDelta :0.0922,longitudeDelta:0.0421}
      this.props.mapDataFetch(initialRegion,destination,finalRegion)
    }
    else{
-     this.props.clearMapData()
+     // this.props.clearMapData()
    }
     })
   }
   render() {
 
     return (
-        <View style={{height:'98%',width:'98%',marginHorizontal:'1%',marginVertical:'1%'}}>
-          <MapView initialRegion={this.props.finalRegion} style={styles.map}
+        <View style={{height:'100%',width:'100%',marginHorizontal:'1%',marginVertical:'1%'}}>
+          <MapView region={this.props.finalRegion} style={styles.map}
           mapType='standard'  minZoomLevel={15}  maxZoomLevel={18}  provider={PROVIDER_GOOGLE}>
              <Polyline coordinates={this.props.destination}
                strokeColor="red" strokeWidth={5} />

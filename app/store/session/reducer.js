@@ -7,8 +7,8 @@ const initialState={
   user:null,initialWindow:'123',
   authSelector:1,
   initialRegion:{latitude:10.5217683,longitude:76.2048967,latitudeDelta :0.0922,longitudeDelta:0.0421},
-  finalRegion:{latitude:10.5217683,longitude:76.2048967,latitudeDelta :0.0922,longitudeDelta:0.0421},
-  destination:[{latitude:10.5217683,longitude:76.2048967}]
+   finalRegion:{latitude:10.5217683,longitude:76.2048967,latitudeDelta :0.0922,longitudeDelta:0.0421},
+ destination:[]
 
 }
 
@@ -39,12 +39,12 @@ switch (action.type) {
  break;
  case 'mapDataFetch':return {...state , initialRegion:action.initialRegion,destination:action.destination,finalRegion:action.finalRegion}
  break;
- case 'clearMapData':return {...state ,
-    initialRegion:{latitude:10.5217683,longitude:76.2048967,latitudeDelta :0.0922,longitudeDelta:0.0421},
-    finalRegion:{latitude:10.5217683,longitude:76.2048967,latitudeDelta :0.0922,longitudeDelta:0.0421},
-    destination:[{latitude:10.5217683,longitude:76.2048967}]
-}
- break;
+//  case 'clearMapData':return {...state ,
+//    initialRegion:{latitude:10.5217683,longitude:76.2048967,latitudeDelta :0.0922,longitudeDelta:0.0421},
+//     finalRegion:{latitude:10.5217683,longitude:76.2048967,latitudeDelta :0.0922,longitudeDelta:0.0421},
+//     destination:[{latitude:10.5217683,longitude:76.2048967}]
+// }
+//  break;
  default: return state;
 
 }

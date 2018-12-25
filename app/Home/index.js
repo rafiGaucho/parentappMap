@@ -35,11 +35,16 @@ componentWillUnmount() {
   }
 getUserId = async () => {
   let userId = '';
-  let busRouteId=[];
+  let busRouteId=[]; let busRouteCode=[]; let busRoute=[];
   try {
     userId = await AsyncStorage.getItem('userID') ;
     busRouteId = await AsyncStorage.getItem('busRouteId') ;
-    this.setState({userID:userId,busRouteId:busRouteId});
+    busRouteCode = await AsyncStorage.getItem('busRouteCode') ;
+    busRoute = await AsyncStorage.getItem('busRoute') ;
+    this.setState({userID:userId,
+      busRouteId:JSON.parse(busRouteId),
+      busRouteCode:JSON.parse(busRouteCode),
+      busRoute:JSON.parse(busRoute)});
     } catch (error) {
     console.warn(error.message);
     }
@@ -75,7 +80,10 @@ loadEnd=()=>{this.setState({isLoading:false})}
     if(this.state.mode === true){
     return (
       <View style={{height:'100%',width:'100%'}}>
-        <Map busRouteId={this.state.busRouteId} handleBackButton={this.handleBackButton}/>
+        <Map busRouteId={this.state.busRouteId}
+           handleBackButton={this.handleBackButton}
+          busRouteCode={this.state.busRouteCode}
+          busRoute={this.state.busRoute}/>
         <PopupDialog
           ref={(popupDialog) => { this.popupDialog = popupDialog; }}
          dialogAnimation={slideAnimation} dismissOnTouchOutside={true}

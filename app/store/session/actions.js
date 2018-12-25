@@ -15,9 +15,9 @@ export const getUser = (userId) => {
         dispatch({type:'getUser',userString:userId})
 }}
 
-export const saveUser = (data,busRouteId) => {
+export const saveUser = (data,busRouteId,busRouteCode,busRoute) => {
   return (dispatch) => {
-        saveUserId(data,busRouteId)
+        saveUserId(data,busRouteId,busRouteCode,busRoute)
         dispatch({type:'saveUser',userString:data})
         // alert(data.message)
 }}
@@ -44,8 +44,10 @@ getUserId = async () => {
 
 }
 
-const saveUserId = (data,busRouteId) => {
-      AsyncStorage.setItem('busRouteId', JSON.stringify(busRouteId));
+const saveUserId = (data,busRouteId,busRouteCode,busRoute) => {
+  AsyncStorage.setItem('busRouteId', JSON.stringify(busRouteId));
+  AsyncStorage.setItem('busRouteCode', JSON.stringify(busRouteCode));
+  AsyncStorage.setItem('busRoute', JSON.stringify(busRoute));
      AsyncStorage.setItem('success', JSON.stringify(data.success));
      AsyncStorage.setItem('userID',JSON.stringify(data.parent.id));
 };
@@ -59,17 +61,17 @@ const removeItemValue= async key => {
    }
  }
 
-
-export const mapFlagFetch=()=>{
-  return (dispatch) => {
-    firebase.database().ref('mapMode/'+schoolCode+'/'+this.state.userID).on('value',(snapshot)=>{
-    // var value = snapshot.val();
-   // this.setState({mode:value})
-   console.warn(snapshot.val());
-   dispatch({type:'mapFlagFetch',payload:snapshot.val()})
-     })
-  }
-}
+//
+// export const mapFlagFetch=()=>{
+//   return (dispatch) => {
+//     firebase.database().ref('mapMode/'+schoolCode+'/'+this.state.userID).on('value',(snapshot)=>{
+//     // var value = snapshot.val();
+//    // this.setState({mode:value})
+//    console.warn(snapshot.val());
+//    dispatch({type:'mapFlagFetch',payload:snapshot.val()})
+//      })
+//   }
+// }
 export const userIdStore=(userId)=>{
 return (dispatch)=>{
   dispatch({type:"userIdStore",payload:userId})
