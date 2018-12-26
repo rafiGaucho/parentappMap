@@ -9,8 +9,9 @@ import {mapDataFetch,clearMapData} from './../../store/session/actions.js';
 // constructor(props) {
 //   super(props);
 // }
-
+  state={isDataAvailable:true}
   componentDidMount (){
+    this.setState({isDataAvailable:true})
     firebase.database().ref('SchoolBus/'+this.props.busCode+this.props.busId).orderByKey().on('value',(snapshot)=>{
       if(snapshot.exists()){
       const destination = []
@@ -28,22 +29,32 @@ import {mapDataFetch,clearMapData} from './../../store/session/actions.js';
    }
    else{
      // this.props.clearMapData()
+     this.setState({isDataAvailable:false})
    }
     })
   }
   render() {
-
-    return (
-        <View style={{height:'100%',width:'100%',marginHorizontal:'1%',marginVertical:'1%'}}>
-          <MapView region={this.props.finalRegion} style={styles.map}
-          mapType='standard'  minZoomLevel={15}  maxZoomLevel={18}  provider={PROVIDER_GOOGLE}>
-             <Polyline coordinates={this.props.destination}
-               strokeColor="red" strokeWidth={5} />
-             <Marker coordinate={this.props.initialRegion} pinColor='red' />
-             <Marker coordinate={this.props.finalRegion} pinColor='green' />
-        </MapView>
-      </View>
+if(!this.state.isDataAvailable){
+  return (
+    <View style={{height:'100%',width:'100%',alignItems:'center',justifyContent:'center',backgroundColor:'grey'}}>
+      <Text style={{color:'black',fontSize:20,fontWeight:'400'}}>Bus Not Started </Text>
+    </View>
   );
+}
+else {
+  return (
+      <View style={{height:'100%',width:'100%',marginHorizontal:'1%',marginVertical:'1%'}}>
+        <MapView region={this.props.finalRegion} style={styles.map}
+        mapType='standard'  minZoomLevel={15}  maxZoomLevel={18}  provider={PROVIDER_GOOGLE}>
+           <Polyline coordinates={this.props.destination}
+             strokeColor="red" strokeWidth={5} />
+           <Marker coordinate={this.props.initialRegion} pinColor='red' />
+           <Marker coordinate={this.props.finalRegion} pinColor='green' />
+      </MapView>
+    </View>
+  );
+}
+
   }
 }
 
