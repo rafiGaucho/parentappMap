@@ -50,7 +50,12 @@ getUserId = async () => {
     }
   }
 handleBackPress = () => {
-    this.popupDialog.show();
+    // this.popupDialog.show();
+    if(this.state.mode){
+      this.handleBackButton();
+      return true;
+    }
+    this._webView_ref.goBack();
     return true;
   }
 handleBackButton = () => {
@@ -110,7 +115,7 @@ loadEnd=()=>{this.setState({isLoading:false})}
           </View>}
 
              <WebView startInLoadingState={true}
-                ref={webview_ref => this.webview = webview_ref}
+                ref={webview_ref => this._webView_ref = webview_ref}
                  onLoadStart={this.loadStart} onLoadEnd={this.loadEnd} onError={this.handleError}
                  source={{uri: 'https://parentapp-a4061.firebaseapp.com/'+this.state.userID+'/'+schoolCode}}
                  style={{flex:1}}
