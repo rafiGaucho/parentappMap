@@ -24,7 +24,7 @@ componentDidMount (){
     firebase.database().ref('mapMode/'+schoolCode+'/'+this.state.userID).on('value',(snapshot)=>{
       var value = snapshot.val();
       if(snapshot.exists()){
-        this.setState({mode:value.mode,busId:value.active})
+        this.setState({mode:value.mode})
       }
       })
     })

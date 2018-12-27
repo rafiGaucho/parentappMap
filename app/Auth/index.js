@@ -58,9 +58,13 @@ handleLogin= async () =>{
             this.props.saveUser(value,busRouteId,busRouteCode,busRoute);
           }
           this.setState({waiting:false});
-        }).then(()=>{if(this.state.data.success==true){
-          this.props.userLogin(this.state.data,fcmToken)}
-          else {alert(this.state.data.message)}}).catch( (err)=>{
+        }).then(()=>{
+          if(this.state.data.success === true){
+          this.props.userLogin(this.state.data,fcmToken)
+          }
+          else {
+            alert(this.state.data.message)}
+          }).catch( (err)=>{
             this.setState({waiting:false});
           alert('invalid username or password');
         })
