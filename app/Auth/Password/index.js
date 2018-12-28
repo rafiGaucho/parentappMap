@@ -23,7 +23,7 @@ class PasswordForgot extends React.Component {
      "mobileNo":this.state.mobNo,
      "schoolCode":schoolCode
         }
-    fetch('http://test.ssdiary.com/ssdiary/parentApp/forgotPassword', {
+    fetch('http://ssdiary.com/ssdiary/parentApp/forgotPassword', {
           method: "POST",
           body: JSON.stringify(data),
           headers: {

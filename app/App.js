@@ -54,8 +54,11 @@ export default class App extends Component {
 
   async checkPermission() {
   const enabled = await firebase.messaging().hasPermission();
+  const  fcmToken = await AsyncStorage.getItem('fcmToken');
   if (enabled) {
+    if(fcmToken === null){
       this.getToken();
+    }
   } else {
       this.requestPermission();
   }

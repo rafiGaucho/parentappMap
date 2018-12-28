@@ -5,7 +5,7 @@ import {schoolCode} from './../../schoolCode.js'
 export const userLogin=(data1,data2)=>{
 return (dispatch)=>{
       dispatch({type:'loggingEnable'});
-      firebase.database().ref('users').child(schoolCode).child(data1.parent.id).set({token:data2})
+      firebase.database().ref('users').child(schoolCode).child(data1.parent.id).push().set({token:data2})
     }
   }
 
