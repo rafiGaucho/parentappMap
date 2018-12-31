@@ -4,6 +4,7 @@ import android.app.Application;
 import io.invertase.firebase.fabric.crashlytics.RNFirebaseCrashlyticsPackage;
 
 import com.facebook.react.ReactApplication;
+import com.oblongmana.webviewfileuploadandroid.AndroidWebViewPackage;
 import com.airbnb.android.react.maps.MapsPackage;
 import im.shimo.react.webview.AdvancedWebViewPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
@@ -33,6 +34,7 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new AndroidWebViewPackage(),
           new MapsPackage(),
           new AdvancedWebViewPackage(),
           new VectorIconsPackage(),

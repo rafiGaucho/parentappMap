@@ -8,6 +8,7 @@ import Hr from "react-native-hr-component";
 import {userLogin,logoutUser,clearMapData} from './../store/session/actions.js'
 import {connect} from 'react-redux';
 import OfflineCacheWebView from 'react-native-offline-cache-webview';
+import AndroidWebView from 'react-native-webview-file-upload-android';
 import {schoolCode} from './../schoolCode.js'
 import firebase from 'react-native-firebase';
 import Map from './Map';
@@ -114,7 +115,7 @@ loadEnd=()=>{this.setState({isLoading:false})}
               <Text style={{fontSize:20,fontWeight:'bold',marginBottom:'10%'}}>fetching ...</Text>
           </View>}
 
-             <WebView startInLoadingState={true}
+             <AndroidWebView startInLoadingState={true}
                 ref={webview_ref => this._webView_ref = webview_ref}
                  onLoadStart={this.loadStart} onLoadEnd={this.loadEnd} onError={this.handleError}
                  source={{uri: 'https://parentapp-a4061.firebaseapp.com/'+this.state.userID+'/'+schoolCode}}
